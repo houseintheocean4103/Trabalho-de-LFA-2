@@ -8,8 +8,10 @@ def afd(transicao, inicial, final, cadeia): #método de leitura do autômato
 
   for symbol in cadeia: #aborda cada valor da sequência
 
-    estado = transicao[estado][symbol] #muda de estados de acordo com o estado anterior e a transição
-
+    if symbol in transicao[estado]:
+        estado = transicao[estado][symbol] #muda de estados de acordo com o estado anterior e a transição
+    else:
+      return "Cadeia rejeitada."
                      #faz o 'casting' dos valores para 'float'
     acumul += float(symbol) #acumula os valores
 
@@ -20,13 +22,13 @@ def afd(transicao, inicial, final, cadeia): #método de leitura do autômato
       print(int(acumul),", vale 0 latinhas.")   #se o resultado for menor que 1, ou seja, se não houver uma quantia suficiente, imprime 0
 
   if acumul == 0:
-    return f'Não há quantias sobrando.'
+    return f'Não há quantias sobrando (Cadeia aceita).'
   if acumul < 100:
     return f'Sobram {acumul} centavos. Faltam {100 - acumul} centavos para uma latinha.'
 
 def main(): #método principal
-    
-    trans_afd = {                             #transições
+
+    trans_afd = {                                #transições
     'q0': {'25': 'q1', '50': 'q2', '100': 'q4'},
     'q1': {'25': 'q2', '50': 'q3', '100': 'q5'},
     'q2': {'25': 'q3', '50': 'q4', '100': 'q6'},
